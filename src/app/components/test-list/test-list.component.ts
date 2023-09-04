@@ -16,7 +16,6 @@ export class TestListComponent {
   public filteredString: string = "";
   public pageSizes: Array<number> = [];
 
-  public persons: Array<any> = [];
   public students: Array<any> = [];
   public loadStudents: Observable<Student[]>; 
 
@@ -27,10 +26,6 @@ export class TestListComponent {
     this.socketService.connectToServer('changeFilter').subscribe((data) => {
       console.log(data);
     });
-  }
-  
-  ngOnInit(): void {
-    this.persons = this.studentsService.getPersons();
   }
 
   ngAfterViewInit() {
