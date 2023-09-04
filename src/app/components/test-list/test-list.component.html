@@ -1,0 +1,67 @@
+<div class="card-container">
+    <div class="row filter">
+        <div class="col-md-5">
+            <label for="filter">Texto a filtrar:</label>
+        </div>
+        <div class="col-md-7">
+            <input 
+                id="filter"
+                type="text"
+                placeholder="Digite texto a filtrar" 
+                class="form-control" 
+                (keyup)="onChangeFilter($event)"
+                [value]="filteredString" 
+            />
+        </div>
+    </div>
+    <div class="row filter">
+        <div class="col-md-5">
+            <label for="pageSize">Registros por página:</label>
+        </div>
+        <div class="col-md-7">
+            <select (change)="onChangePageSize($event)" id="pageSize" class="form-select" style="width: 80px;">
+                <option *ngFor="let size of pageSizes" [value]="size">
+                    {{size}}
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Tipo Documento</th>
+                        <th scope="col">Documento</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Pais</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let student of students | filter: filteredString | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize">
+                    
+                        <td>{{student.lastname}}</td>
+                        <td>{{student.name}}</td>
+                        <td>{{student.documentType}}</td>
+                        <td>{{student.document}}</td>
+                        <td>{{student.email}}</td>
+                        <td>{{student.phone}}</td>
+                        <td>{{student.country}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <ngb-pagination 
+                [(page)]="page" 
+                [pageSize]="pageSize" 
+                [collectionSize]="(students | filter: filteredString).length" 
+            >
+            </ngb-pagination>
+        </div>       
+    </div>
+</div>
+
+
